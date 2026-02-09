@@ -63,22 +63,34 @@ accumulator.setDecayFunction(dv.Accumulator.Decay.EXPONENTIAL)
 accumulator.setDecayParam(1e+6)
 accumulator.setIgnorePolarity(True)
 accumulator.setSynchronousDecay(False)
+output_name = "simple_accumulator.mp4"
 '''
 
-# EDGE MAP
-
+# EDGE MAP ACCUMULATOR
+'''
 accumulator = dv.EdgeMapAccumulator(resolution)
-accumulator.setNeutralPotential(0.0)
+accumulator.setNeutralPotential(0.5)
 accumulator.setEventContribution(0.15)
-accumulator.setIgnorePolarity(True)
+accumulator.setIgnorePolarity(False)
+output_name = "edge_map_accumulator.mp4"
+'''
 
+# TIME SURFACE ACCUMULATOR
+'''
+accumulator = dv.TimeSurface(resolution)
+output_name = "time_surface_map.mp4"
+'''
+
+# SPEED INVARIENT TIME SURFACE
+accumulator = dv.SpeedInvariantTimeSurface(resolution)
+output_name = "speed_invarient_time_surface_map.mp4"
 
 # Create a filter chain to reduce noise
-filter_chain = dv.EventFilterChain()
+#filter_chain = dv.EventFilterChain()
 #filter_chain.addFilter(dv.noise.BackgroundActivityNoiseFilter(resolution, 1.0))
 
 # Set up the OpenCV VideoWriter to save the MP4
-video_path = output_video_dir / "edge_map.mp4"
+video_path = output_video_dir / output_name
 fourcc = cv2.VideoWriter_fourcc(*'mp4v') # Codec for .mp4
 video_writer = cv2.VideoWriter(str(video_path), fourcc, output_fps, (resolution[0], resolution[1]), isColor=False)
 print(f"Will save video to: {video_path}")
@@ -98,13 +110,13 @@ def process_events_callback(events: dv.EventStore):
     global frame_counter
 
     # Pass data to the filter chain
-    filter_chain.accept(events)
+    #filter_chain.accept(events)
     # Get the filtered events
-    filtered_events = filter_chain.generateEvents()
+    #filtered_events = filter_chain.generateEvents()
 
     # Pass the filtered data into the accumulator
-    if filtered_events is not None and not filtered_events.isEmpty():
-        accumulator.accept(filtered_events)
+    if events is not None and not events.isEmpty():
+        accumulator.accept(events)
 
         # Generate the edge map frame
         frame = accumulator.generateFrame()
@@ -121,7 +133,7 @@ def process_events_callback(events: dv.EventStore):
 # Initiate the event stream slicer
 slicer = dv.EventStreamSlicer()
 # Calculate slicing interval from the desired FPS
-slicing_interval = datetime.timedelta(seconds=0.3)
+slicing_interval = datetime.timedelta(seconds=0.033)
 slicer.doEveryTimeInterval(slicing_interval, process_events_callback)
 
 # --- 5. Main Processing Loop ---
