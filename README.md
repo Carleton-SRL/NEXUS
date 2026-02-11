@@ -17,3 +17,5 @@ The [import](https://github.com/Carleton-SRL/CNN/tree/main/import) folder in the
 The [process](https://github.com/Carleton-SRL/CNN/tree/main/process) folder contains code for importing event data into MATLAB or Python, as well as code for simple tasks like splicing out sections of the data or simple visualization tools.
 
 The [record](https://github.com/Carleton-SRL/CNN/tree/main/record) folder contains code for recording event data and synchronizing it with ground truth PhaseSpace data in the SPOT facility.
+
+The [tools](https://github.com/Carleton-SRL/CNN/tree/main/tools) folder contains code that may be useful but is not necessarily specific for event data processing.
