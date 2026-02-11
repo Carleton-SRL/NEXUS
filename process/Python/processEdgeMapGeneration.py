@@ -76,14 +76,17 @@ output_name = "edge_map_accumulator.mp4"
 '''
 
 # TIME SURFACE ACCUMULATOR
+
 '''
 accumulator = dv.TimeSurface(resolution)
 output_name = "time_surface_map.mp4"
 '''
 
 # SPEED INVARIENT TIME SURFACE
+
 accumulator = dv.SpeedInvariantTimeSurface(resolution)
 output_name = "speed_invarient_time_surface_map.mp4"
+
 
 # Create a filter chain to reduce noise
 #filter_chain = dv.EventFilterChain()
