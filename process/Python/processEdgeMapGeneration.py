@@ -12,7 +12,7 @@ dataset_path = Path('/home/alexandercrain/Dropbox/Graduate Documents/Doctor of P
 output_path = Path('/home/alexandercrain/Videos/Research')
 
 # Desired output frame rate for the video
-output_fps = 60.0
+output_fps = 60
 
 # --- 2. File and Directory Setup ---
 
@@ -67,13 +67,13 @@ output_name = "simple_accumulator.mp4"
 '''
 
 # EDGE MAP ACCUMULATOR
-'''
+
 accumulator = dv.EdgeMapAccumulator(resolution)
 accumulator.setNeutralPotential(0.5)
 accumulator.setEventContribution(0.15)
 accumulator.setIgnorePolarity(False)
 output_name = "edge_map_accumulator.mp4"
-'''
+
 
 # TIME SURFACE ACCUMULATOR
 
@@ -83,10 +83,10 @@ output_name = "time_surface_map.mp4"
 '''
 
 # SPEED INVARIENT TIME SURFACE
-
+'''
 accumulator = dv.SpeedInvariantTimeSurface(resolution)
 output_name = "speed_invarient_time_surface_map.mp4"
-
+'''
 
 # Create a filter chain to reduce noise
 #filter_chain = dv.EventFilterChain()
@@ -136,7 +136,7 @@ def process_events_callback(events: dv.EventStore):
 # Initiate the event stream slicer
 slicer = dv.EventStreamSlicer()
 # Calculate slicing interval from the desired FPS
-slicing_interval = datetime.timedelta(seconds=0.033)
+slicing_interval = datetime.timedelta(seconds=0.33)
 slicer.doEveryTimeInterval(slicing_interval, process_events_callback)
 
 # --- 5. Main Processing Loop ---
